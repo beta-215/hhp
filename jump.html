@@ -8,41 +8,65 @@
     body {
       margin: 0;
       background: #111;
-      color: #fff;
-      font-family: Arial, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      text-align: center;
-      font-size: 1.2em;
+    }
+
+    /* 小圆点容器 */
+    .dots {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* 每个圆点 */
+    .dot {
+      width: 12px;
+      height: 12px;
+      background-color: #0af;
+      border-radius: 50%;
+      opacity: 0;
+      animation: blinkFade 1.2s infinite;
+    }
+
+    /* 延迟错开，让三个圆点依次出现 */
+    .dot:nth-child(1) { animation-delay: 0s; }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    /* 闪烁 + 渐入渐出动画 */
+    @keyframes blinkFade {
+      0%, 80%, 100% { opacity: 0.2; }
+      40% { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div id="msg">正在跳转，请稍候...</div>
+  <div class="dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
 
   <script>
-    // 从 URL 参数获取 link id
     const params = new URLSearchParams(window.location.search);
     const linkId = params.get("link");
 
-    // 读取 links.json，找到对应的真实链接
     fetch("links.json")
       .then(res => res.json())
       .then(data => {
         const realUrl = data["link" + linkId];
         if (realUrl) {
           setTimeout(() => {
-            document.getElementById("msg").innerText = "正在跳转中...";
             window.location.href = realUrl;
-          }, 500); // ✅ 延迟 0.5 秒
+          }, 500); // 延迟 0.5 秒
         } else {
-          document.getElementById("msg").innerText = "链接不存在或已失效。";
+          document.body.innerHTML = "<p style='color:red;'>链接不存在或已失效。</p>";
         }
       })
       .catch(() => {
-        document.getElementById("msg").innerText = "加载失败，请稍后重试。";
+        document.body.innerHTML = "<p style='color:red;'>加载失败，请稍后重试。</p>";
       });
   </script>
 </body>
