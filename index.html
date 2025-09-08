@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>导航入口</title>
+  <title>导航入口 - 绿色版</title>
   <style>
     body {
       margin: 0;
@@ -32,9 +32,9 @@
     h1 {
       margin-bottom: 20px;
       font-size: 1em;
-      color: #0af;
+      color: #3f0; /* 青绿色 */
       text-align: center;
-      text-shadow: 0 0 6px #0af;
+      text-shadow: 0 0 6px #3f0;
     }
 
     .group-title {
@@ -42,14 +42,14 @@
       font-weight: bold;
       margin: 10px 0;
       text-align: center;
-      color: #0ff;
-      text-shadow: 0 0 3px #0ff;
+      color: #6f6;
+      text-shadow: 0 0 3px #6f6;
     }
 
     .divider {
       width: 70%;
       height: 1px;
-      background: linear-gradient(to right, transparent, #0af, transparent);
+      background: linear-gradient(to right, transparent, #3f0, transparent);
       margin: 15px 0;
       border-radius: 1px;
     }
@@ -78,10 +78,10 @@
 
     /* 分组颜色区分 */
     .group1 .link-btn {
-      background: linear-gradient(90deg, #0af, #06c); /* 蓝色系 */
+      background: linear-gradient(90deg, #3f0, #080);
     }
     .group2 .link-btn {
-      background: linear-gradient(90deg, #66ccff, #0099cc); /* 浅蓝色渐变 */
+      background: linear-gradient(90deg, #6f6, #0c9);
     }
 
     .link-btn:hover {
@@ -92,11 +92,11 @@
 
     .footer-text {
       font-size: 0.85em;
-      color: #0ff;
+      color: #6f6;
       text-align: center;
       line-height: 1.4em;
       margin-top: 10px;
-      text-shadow: 0 0 2px #0ff;
+      text-shadow: 0 0 2px #6f6;
     }
   </style>
 </head>
@@ -125,7 +125,6 @@
         const group1 = document.getElementById('group1');
         const group2 = document.getElementById('group2');
 
-        // 热门入口
         for (let i = 1; i <= 6; i++) {
           const btn = document.createElement('a');
           btn.className = 'link-btn';
@@ -134,7 +133,6 @@
           group1.appendChild(btn);
         }
 
-        // 限时直播入口
         for (let i = 7; i <= 9; i++) {
           const btn = document.createElement('a');
           btn.className = 'link-btn';
