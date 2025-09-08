@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hello</title>
+  <title>导航入口 - 光晕淡雅版</title>
   <style>
     body {
       margin: 0;
       font-family: "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
+      background: linear-gradient(to bottom, #0a0a0a, #1c1c1c);
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -33,9 +33,9 @@
     h1 {
       margin-bottom: 20px;
       font-size: 1em;
-      color: #00ffaa; /* 青绿 */
+      color: #4aa3ff; /* 淡蓝 */
       text-align: center;
-      text-shadow: 0 0 6px #00ffaa;
+      text-shadow: 0 0 6px rgba(74,163,255,0.6);
     }
 
     /* 分组标题 */
@@ -44,14 +44,20 @@
       font-weight: bold;
       margin: 10px 0;
       text-align: center;
-      color: #ffb347; /* 橙黄色 */
-      text-shadow: 0 0 4px #ffb347;
+    }
+    .group1-title {
+      color: #2ecc71;
+      text-shadow: 0 0 4px rgba(46,204,113,0.6);
+    }
+    .group2-title {
+      color: #c084fc;
+      text-shadow: 0 0 4px rgba(192,132,252,0.6);
     }
 
     .divider {
       width: 70%;
       height: 1px;
-      background: linear-gradient(to right, transparent, #ffb347, transparent);
+      background: linear-gradient(to right, transparent, #444, transparent);
       margin: 15px 0;
       border-radius: 1px;
     }
@@ -60,41 +66,52 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       width: 100%;
     }
 
     .link-btn {
       width: 100%;
-      padding: 10px 14px;
+      padding: 12px 16px;
       text-align: center;
       text-decoration: none;
       color: #fff;
       border-radius: 8px;
-      font-size: 0.95em;
+      font-size: 1em;
       font-weight: 500;
       transition: all 0.25s;
       box-sizing: border-box;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.35);
+      background-size: 200% 200%;
+      animation: glowMove 6s ease infinite;
     }
 
-    /* 按钮配色 */
+    /* 渐变配色 */
     .group1 .link-btn {
-      background: linear-gradient(90deg, #00ffaa, #00cc88); /* 青绿色 */
+      background: linear-gradient(270deg, #4facfe, #00f2fe, #4facfe);
     }
     .group2 .link-btn {
-      background: linear-gradient(90deg, #ffb347, #ff7e5f); /* 橙色系 */
+      background: linear-gradient(270deg, #a18cd1, #fbc2eb, #a18cd1);
     }
 
+    /* 悬停效果 */
     .link-btn:hover {
-      transform: scale(1.03);
-      filter: brightness(1.1);
-      box-shadow: 0 5px 12px rgba(0,0,0,0.45);
+      transform: scale(1.05);
+      filter: brightness(1.15);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.5);
     }
 
+    /* 光晕流动动画 */
+    @keyframes glowMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 底部提示 */
     .footer-text {
-      font-size: 0.85em;
-      color: #bbb; /* 浅灰色 */
+      font-size: 0.8em;
+      color: rgba(200,200,200,0.7);
       text-align: center;
       line-height: 1.4em;
       margin-top: 10px;
@@ -106,12 +123,12 @@
   <div class="content">
     <h1>提示：打不开就换入口，点击按钮继续访问</h1>
 
-    <div class="group-title">🔥 热门榜单入口</div>
+    <div class="group-title group1-title">🔥 热门榜单入口</div>
     <div class="group group1" id="group1"></div>
 
     <div class="divider"></div>
 
-    <div class="group-title">🎬 限时直播入口</div>
+    <div class="group-title group2-title">🎬 限时直播入口</div>
     <div class="group group2" id="group2"></div>
   </div>
 
