@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hello</title>
+  <title>导航入口</title>
   <style>
     body {
       margin: 0;
@@ -129,8 +129,11 @@
         for (let i = 1; i <= 6; i++) {
           const btn = document.createElement('a');
           btn.className = 'link-btn';
-          btn.href = 'jump.html?link=' + i;
+          btn.href = 'javascript:void(0)';
           btn.innerText = '入口' + i;
+          btn.onclick = function() {
+            goToLink(i);
+          };
           group1.appendChild(btn);
         }
 
@@ -138,12 +141,22 @@
         for (let i = 7; i <= 9; i++) {
           const btn = document.createElement('a');
           btn.className = 'link-btn';
-          btn.href = 'jump.html?link=' + i;
+          btn.href = 'javascript:void(0)';
           btn.innerText = '直播' + (i - 6);
+          btn.onclick = function() {
+            goToLink(i);
+          };
           group2.appendChild(btn);
         }
       });
+
+    // 跳转逻辑
+    function goToLink(link) {
+      setTimeout(() => {
+        window.location.href = 'jump.html?link=' + link;
+      }, 100);
+    }
   </script>
 
 </body>
-</html>  这个代码的跳转部署在github静态页面，在微信中打开容易被微信检测并且报红，即被微信和谐掉。可以规避微信检测吗
+</html>
