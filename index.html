@@ -119,10 +119,21 @@
   </div>
 
   <script>
+    // 检测 URL 是否可访问（只 HEAD，不下载内容）
+    async function checkURL(url) {
+      try {
+        const res = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+        // mode: 'no-cors' 时 status 永远 0，这里直接返回 true，让微信不拦截
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
     // 自动读取 links.json 并生成按钮
     fetch('links.json?t=' + Date.now()) // 防缓存
       .then(res => res.json())
-      .then(data => {
+      .then(async (data) => {
         const group1 = document.getElementById('group1');
         const group2 = document.getElementById('group2');
 
@@ -130,12 +141,14 @@
         for (let i = 1; i <= 6; i++) {
           const url = data[i.toString()];
           if (url) {
-            const btn = document.createElement('a');
-            btn.className = 'link-btn';
-            // 不直接暴露真实链接，跳到 jump.html
-            btn.href = 'jump.html?link=' + i;
-            btn.innerText = '入口' + i;
-            group1.appendChild(btn);
+            const ok = await checkURL(url);
+            if (ok) {
+              const btn = document.createElement('a');
+              btn.className = 'link-btn';
+              btn.href = 'jump.html?link=' + i;
+              btn.innerText = '入口' + i;
+              group1.appendChild(btn);
+            }
           }
         }
 
@@ -143,11 +156,14 @@
         for (let i = 7; i <= 9; i++) {
           const url = data[i.toString()];
           if (url) {
-            const btn = document.createElement('a');
-            btn.className = 'link-btn';
-            btn.href = 'jump.html?link=' + i;
-            btn.innerText = '直播' + (i - 6);
-            group2.appendChild(btn);
+            const ok = await checkURL(url);
+            if (ok) {
+              const btn = document.createElement('a');
+              btn.className = 'link-btn';
+              btn.href = 'jump.html?link=' + i;
+              btn.innerText = '直播' + (i - 6);
+              group2.appendChild(btn);
+            }
           }
         }
       })
