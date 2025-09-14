@@ -5,34 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>跳转中...</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #111;
-      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .loading {
+      font-size: 1em;
+      color: #0ff;
     }
   </style>
 </head>
 <body>
+  <div class="loading">正在为您跳转，请稍候...</div>
   <script>
     const params = new URLSearchParams(window.location.search);
-    const linkId = params.get("link");
+    const link = params.get('link');
 
-    fetch("links.json")
-      .then(res => res.json())
-      .then(data => {
-        const realUrl = data["link" + linkId];
-        if (realUrl) {
-          // 立即跳转
-          window.location.replace(realUrl);
-        } else {
-          document.body.innerHTML = "<p style='color:red; text-align:center; margin-top:50px;'>链接不存在或已失效。</p>";
-        }
-      })
-      .catch(() => {
-        document.body.innerHTML = "<p style='color:red; text-align:center; margin-top:50px;'>加载失败，请稍后重试。</p>";
-      });
+    if (link) {
+      fetch('links.json?t=' + Date.now())
+        .then(res => res.json())
+        .then(data => {
+          const target = data[link];
+          if (target) {
+            setTimeout(() => {
+              window.location.href = target;
+            }, 800); // 延迟 0.8 秒跳转
+          } else {
+            document.body.innerHTML = '<div class="loading">链接无效或已过期</div>';
+          }
+        });
+    } else {
+      document.body.innerHTML = '<div class="loading">参数缺失</div>';
+    }
   </script>
 </body>
 </html>
