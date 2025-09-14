@@ -4,46 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>跳转中...</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .loading {
-      font-size: 1em;
-      color: #0ff;
-    }
-  </style>
-</head>
-<body>
-  <div class="loading">正在为您跳转，请稍候...</div>
   <script>
+    // 读取 ?link= 参数
     const params = new URLSearchParams(window.location.search);
-    const link = params.get('link');
+    const index = params.get('link');
 
-    if (link) {
-      fetch('links.json?t=' + Date.now())
-        .then(res => res.json())
-        .then(data => {
-          const target = data[link];
-          if (target) {
-            setTimeout(() => {
-              window.location.href = target;
-            }, 800); // 延迟 0.8 秒跳转
-          } else {
-            document.body.innerHTML = '<div class="loading">链接无效或已过期</div>';
-          }
-        });
-    } else {
-      document.body.innerHTML = '<div class="loading">参数缺失</div>';
-    }
+    // 直接加载 links.json
+    fetch('links.json?t=' + Date.now()) // 防缓存
+      .then(res => res.json())
+      .then(data => {
+        const url = data[index];
+        if (url) {
+          // 立刻跳转，无提示、无延迟
+          window.location.href = url;
+        } else {
+          document.body.innerHTML = '<p style="color:#fff;text-align:center;margin-top:20%;">链接不存在</p>';
+        }
+      })
+      .catch(() => {
+        document.body.innerHTML = '<p style="color:#fff;text-align:center;margin-top:20%;">加载链接失败</p>';
+      });
   </script>
+</head>
+<body style="margin:0;background:#000;color:#fff;font-family:Arial;text-align:center;">
+  <!-- 不显示任何提示，直接跳 -->
 </body>
 </html>
